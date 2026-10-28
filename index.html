@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Protótipo do site do Paula Couto Atelier da Dança, em Pedro Leopoldo.">
+<style>img{max-width:100%}[hidden]{display:none!important}body{margin:0}</style>
+<title>Atelier Paula Couto</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+<style>
+/* Da sala ao palco: coluna editorial estreita (sala) alternando com fotos de largura total (palco). */
+:root {
+  --papel: #F7F2EE;
+  --tinta: #2B2326;
+  --rosa: #A3416A;
+  --rosa-po: #EAD3D9;
+  --linho: #645759;
+  --palco: #3A2A30;
+  --sobre-palco: #F7F2EE;
+  --sans: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --coluna: 62ch;
+  --secao: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #1D1719; --tinta: #F1E8EA; --rosa: #E28AAB; --rosa-po: #3A2A30;
+    --linho: #B4A6A9; --palco: #120E0F; --sobre-palco: #F1E8EA; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papel: #1D1719; --tinta: #F1E8EA; --rosa: #E28AAB; --rosa-po: #3A2A30;
+  --linho: #B4A6A9; --palco: #120E0F; --sobre-palco: #F1E8EA; color-scheme: dark;
+}
+@media (min-width: 1024px) { :root { --secao: 96px; } }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body {
+  background: var(--papel); color: var(--tinta);
+  font: 400 16px/1.7 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 1024px) { body { font-size: 17px; } }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--papel); }
+
+.gutter { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--sans); font-weight: 300; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; }
+p { margin: 0; }
+a { color: var(--rosa); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; border-radius: 2px; }
+.rotulo { font: 600 14px/1.3 var(--sans); color: var(--linho); }
+.pendente { color: var(--linho); background: color-mix(in srgb, var(--rosa-po) 60%, transparent); padding: 0 4px; border-radius: 2px; }
+
+/* Aviso de protótipo */
+.aviso { background: var(--tinta); color: var(--papel); font-size: 13px; padding-block: 8px; text-align: center; }
+
+/* Cabeçalho */
+header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--papel); border-bottom: 1px solid var(--rosa-po);
+}
+header .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+.marca { font-family: var(--sans); font-weight: 500; font-size: 17px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tinta); text-decoration: none; line-height: 1.1; }
+.marca small { display: block; font: 500 10px/1.3 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--linho); }
+nav { display: flex; gap: 24px; align-items: center; }
+nav a { color: var(--tinta); text-decoration: none; font-size: 15px; }
+nav a:hover { color: var(--rosa); }
+nav .ancora { display: none; }
+nav .whats { color: var(--rosa); font-weight: 600; }
+@media (min-width: 1024px) { nav .ancora { display: inline; } }
+
+/* Espaços reservados para fotos */
+.foto {
+  position: relative; background: var(--rosa-po); max-width: 100%;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.foto span { font-size: 12px; line-height: 1.4; color: var(--linho); padding: 10px 12px; }
+.foto.escura { background: var(--palco); }
+.foto.escura span { color: color-mix(in srgb, var(--sobre-palco) 60%, transparent); }
+
+/* Abertura */
+.abertura { position: relative; color: var(--sobre-palco); }
+.abertura .foto { position: absolute; inset: 0; }
+.abertura .foto span { position: absolute; top: 0; right: 0; }
+.abertura .conteudo { position: relative; padding-block: 160px 48px; display: grid; gap: 20px; max-width: 1180px; margin: 0 auto; }
+.abertura h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.03; max-width: 12ch; animation: entra 600ms ease-out both; }
+.abertura p { max-width: 34ch; font-size: 18px; color: color-mix(in srgb, var(--sobre-palco) 85%, transparent); animation: entra 600ms 120ms ease-out both; }
+.abertura .botao { justify-self: start; animation: entra 600ms 240ms ease-out both; }
+@keyframes entra { from { opacity: .001; transform: translateY(12px); } }
+@media (min-width: 1024px) { .abertura .conteudo { padding-block: 280px 80px; } }
+
+.botao {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px;
+  background: var(--rosa); color: #fff; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 2px;
+  transition: background 200ms;
+}
+:root[data-theme="dark"] .botao { color: #1D1719; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .botao { color: #1D1719; } }
+.botao:hover { background: color-mix(in srgb, var(--rosa) 85%, var(--tinta)); }
+
+section { padding-block: var(--secao); scroll-margin-top: 60px; }
+
+/* O ateliê */
+.ateliê { display: grid; gap: 32px; }
+.ateliê .foto { aspect-ratio: 4 / 5; }
+.ateliê .texto { display: grid; gap: 20px; align-content: start; max-width: var(--coluna); }
+.assinatura { font-weight: 300; font-size: 22px; line-height: 1.35; color: var(--rosa); border-top: 1px solid var(--rosa-po); padding-top: 20px; }
+@media (min-width: 1024px) {
+  .ateliê { grid-template-columns: 5fr 6fr; gap: 72px; align-items: center; }
+  .ateliê .foto { margin-top: -40px; }
+}
+
+/* Aulas */
+.aulas-topo { display: grid; gap: 12px; margin-bottom: 32px; }
+.aulas { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rosa-po); }
+.aulas li { display: grid; gap: 4px; padding-block: 20px; border-bottom: 1px solid var(--rosa-po); }
+.aulas h3 { font-size: 24px; line-height: 1.2; }
+.aulas .quem { color: var(--tinta); }
+.aulas .quando { color: var(--linho); font-size: 15px; font-variant-numeric: tabular-nums; }
+.aulas-nota { margin-top: 20px; color: var(--linho); font-size: 15px; }
+@media (min-width: 768px) {
+  .aulas li { grid-template-columns: 2fr 2fr 2fr; gap: 24px; align-items: baseline; }
+}
+
+/* Galeria */
+.galeria-topo { display: grid; gap: 12px; margin-bottom: 40px; max-width: var(--coluna); }
+.serie + .serie { margin-top: 56px; }
+.serie h3 { font-size: 26px; margin-bottom: 20px; }
+.serie h3 { color: var(--rosa); }
+.grade { display: grid; gap: 12px; }
+.grade button {
+  all: unset; cursor: zoom-in; display: block; max-width: 100%;
+}
+.grade .foto { width: 100%; aspect-ratio: 4 / 5; transition: opacity 200ms; }
+.grade button:hover .foto { opacity: .88; }
+.grade button:focus-visible { outline: 2px solid var(--rosa); outline-offset: 3px; }
+@media (min-width: 640px) { .grade { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) {
+  .grade { grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+  .grade button:nth-child(3n+2) .foto { aspect-ratio: 3 / 4; margin-top: 48px; }
+  .grade button:nth-child(3n) .foto { aspect-ratio: 1 / 1; }
+}
+.mais { margin-top: 32px; display: inline-block; }
+
+/* Lightbox */
+dialog { border: 0; padding: 0; background: transparent; max-width: min(92vw, 720px); width: 100%; }
+dialog::backdrop { background: rgb(18 14 15 / .92); }
+dialog .foto { aspect-ratio: 4 / 5; width: 100%; max-height: 80vh; }
+dialog .legenda { color: #F1E8EA; font-size: 14px; margin-top: 12px; display: flex; justify-content: space-between; gap: 16px; }
+dialog button { all: unset; cursor: pointer; color: #F1E8EA; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+dialog button:focus-visible { outline: 2px solid #E28AAB; outline-offset: 3px; }
+
+/* Avaliações */
+.avaliacoes { display: grid; gap: 32px; border-top: 1px solid var(--rosa-po); padding-top: 40px; }
+.nota { display: flex; align-items: baseline; gap: 16px; }
+.nota .numero { font-weight: 300; font-size: clamp(64px, 12vw, 104px); line-height: 1; color: var(--rosa); font-variant-numeric: tabular-nums; }
+.nota p { color: var(--linho); font-size: 15px; }
+.avaliacoes blockquote { margin: 0; display: grid; gap: 12px; max-width: 40ch; }
+.avaliacoes blockquote p { font-weight: 300; font-size: clamp(22px, 3vw, 28px); line-height: 1.35; }
+.avaliacoes cite { font-style: normal; color: var(--linho); font-size: 15px; }
+.avaliacoes .acoes { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+@media (min-width: 1024px) { .avaliacoes { grid-template-columns: 1fr 1.4fr; align-items: end; } .avaliacoes .acoes { grid-column: 1 / -1; } }
+
+/* Contato */
+.contato { background: var(--rosa-po); }
+.contato .wrap { display: grid; gap: 32px; }
+.contato .chamada { display: grid; gap: 20px; max-width: 30ch; }
+.contato dl { margin: 0; display: grid; gap: 20px; }
+.contato dd { margin: 4px 0 0; }
+.contato .botao { width: 100%; }
+.contato a:not(.botao) { color: var(--tinta); }
+@media (min-width: 1024px) {
+  .contato .wrap { grid-template-columns: 1fr 1fr; align-items: end; }
+  .contato .botao { width: auto; }
+}
+
+/* Rodapé */
+footer { padding-block: 40px; font-size: 15px; color: var(--linho); }
+footer .wrap { display: grid; gap: 16px; }
+footer .links { display: flex; gap: 24px; flex-wrap: wrap; }
+@media (min-width: 768px) { footer .wrap { grid-template-columns: 1fr auto; align-items: end; } }
+</style>
+</head>
+<body>
+
+<div class="aviso gutter">Protótipo para aprovação. As fotos são espaços reservados, e o que está entre colchetes depende de confirmação.</div>
+
+<header class="gutter">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Paula Couto Atelier da Dança, voltar ao início">Paula Couto<small>Atelier da Dança</small></a>
+    <nav aria-label="Principal">
+      <a class="ancora" href="#atelie">O ateliê</a>
+      <a class="ancora" href="#aulas">Aulas</a>
+      <a class="ancora" href="#galeria">Galeria</a>
+      <a class="whats" href="https://wa.me/message/R2PNJ2TWSX5AE1" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="abertura gutter">
+    <div class="foto escura" role="img" aria-label="Espaço reservado para foto de festival"><span>Foto: festival, palco inteiro, luz quente</span></div>
+    <div class="conteudo">
+      <h1>Dança desde os 3 anos, em Pedro Leopoldo.</h1>
+      <p>Ballet, jazz e baby class num ateliê de bairro, com festival no fim do ano. <span class="pendente">[modalidades a confirmar]</span></p>
+      <a class="botao" href="https://wa.me/message/R2PNJ2TWSX5AE1" target="_blank" rel="noopener">Marcar uma visita</a>
+    </div>
+  </div>
+
+  <section id="atelie" class="gutter">
+    <div class="wrap ateliê">
+      <div class="foto" role="img" aria-label="Espaço reservado para retrato da Paula"><span>Foto: Paula em sala, perto da barra</span></div>
+      <div class="texto">
+        <h2>Um ateliê de dança em Pedro Leopoldo.</h2>
+        <p>O ateliê começou em <span class="pendente">[ano]</span>, com a Paula e uma turma pequena de ballet. Hoje são <span class="pendente">[número]</span> alunos, dos 3 anos até os adultos.</p>
+        <p>Aqui a aula tem exigência, mas a criança aprende sem medo de errar. No fim do ano, todo mundo sobe ao palco no festival.</p>
+        <p class="assinatura">Mais do que dançar: encantar e ser feliz.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="aulas" class="gutter">
+    <div class="wrap">
+      <div class="aulas-topo">
+        <h2>O que dá para fazer no ateliê</h2>
+      </div>
+      <ul class="aulas">
+        <li><h3>Baby Class</h3><span class="quem"><span class="pendente">[idade]</span></span><span class="quando"><span class="pendente">[dias e horários]</span></span></li>
+        <li><h3>Ballet Clássico</h3><span class="quem">A partir de 3 anos</span><span class="quando"><span class="pendente">[dias e horários]</span></span></li>
+        <li><h3>Jazz</h3><span class="quem"><span class="pendente">[idade]</span></span><span class="quando"><span class="pendente">[confirmar se segue ativo]</span></span></li>
+        <li><h3>FitDance e FitDance Kids</h3><span class="quem">Crianças e adultos</span><span class="quando"><span class="pendente">[confirmar se segue ativo]</span></span></li>
+        <li><h3>Forró</h3><span class="quem">Com o grupo Candeeiro Iandé</span><span class="quando">Segundas, 20h às 21h30</span></li>
+      </ul>
+      <p class="aulas-nota">Valores e vagas pelo WhatsApp.</p>
+    </div>
+  </section>
+
+  <section id="galeria" class="gutter">
+    <div class="wrap">
+      <div class="galeria-topo">
+        <h2>Da sala ao palco</h2>
+      </div>
+
+      <div class="serie">
+        <h3>Na sala</h3>
+        <div class="grade">
+          <button type="button" data-legenda="Aula de ballet, na barra"><div class="foto"><span>Aula de ballet, na barra</span></div></button>
+          <button type="button" data-legenda="Sapatilhas no chão antes da aula"><div class="foto"><span>Sapatilhas no chão antes da aula</span></div></button>
+          <button type="button" data-legenda="Baby Class em roda"><div class="foto"><span>Baby Class em roda</span></div></button>
+          <button type="button" data-legenda="Professora corrigindo um braço"><div class="foto"><span>Professora corrigindo um braço</span></div></button>
+          <button type="button" data-legenda="A sala vazia, com luz da janela"><div class="foto"><span>A sala vazia, com luz da janela</span></div></button>
+          <button type="button" data-legenda="Turma de jazz no espelho"><div class="foto"><span>Turma de jazz no espelho</span></div></button>
+        </div>
+      </div>
+
+      <div class="serie">
+        <h3>No palco</h3>
+        <div class="grade">
+          <button type="button" data-legenda="Festival Enrolados, 2026. Foto: [crédito]" data-escura><div class="foto escura"><span>Festival Enrolados, 2026</span></div></button>
+          <button type="button" data-legenda="Colorindo Emoções, 05/07/2026. Foto: [crédito]" data-escura><div class="foto escura"><span>Colorindo Emoções, julho de 2026</span></div></button>
+          <button type="button" data-legenda="Festival 2025. Foto: [crédito]" data-escura><div class="foto escura"><span>Festival 2025</span></div></button>
+          <button type="button" data-legenda="Coxia antes de entrar. Foto: [crédito]" data-escura><div class="foto escura"><span>Coxia antes de entrar</span></div></button>
+          <button type="button" data-legenda="Agradecimento final, turma toda. Foto: [crédito]" data-escura><div class="foto escura"><span>Agradecimento final, turma toda</span></div></button>
+          <button type="button" data-legenda="Festival 2024. Foto: [crédito]" data-escura><div class="foto escura"><span>Festival 2024</span></div></button>
+        </div>
+      </div>
+
+      <a class="mais" href="https://www.instagram.com/atelierdadancapaulacouto/" target="_blank" rel="noopener">Mais fotos no Instagram</a>
+    </div>
+  </section>
+
+  <section id="avaliacoes" class="gutter">
+    <div class="wrap avaliacoes">
+      <div class="nota">
+        <span class="numero">4,8</span>
+        <p>de 5 no Google<br>20 avaliações, em outubro de 2026</p>
+      </div>
+      <blockquote>
+        <p>“Não só é a melhor escola de dança como é o melhor lugar do mundo!”</p>
+        <cite>Laura Alves, avaliação no Google</cite>
+      </blockquote>
+      <div class="acoes">
+        <a href="https://www.google.com/maps/search/Paula+Couto+Atelier+da+Dan%C3%A7a+Pedro+Leopoldo" target="_blank" rel="noopener">Ver todas as avaliações no Google</a>
+        <a href="https://www.google.com/maps/search/Paula+Couto+Atelier+da+Dan%C3%A7a+Pedro+Leopoldo" target="_blank" rel="noopener">Deixar sua avaliação</a>
+        <span class="pendente">[link direto de avaliação depende do ID do perfil no Google]</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="contato gutter">
+    <div class="wrap">
+      <div class="chamada">
+        <h2>A primeira conversa é pelo WhatsApp.</h2>
+        <p>Atendemos das 14h às 18h. <span class="pendente">[horário a confirmar]</span></p>
+      </div>
+      <div>
+        <dl>
+          <div><dt class="rotulo">Endereço</dt><dd>Rua Comendador Antônio Alves, 1396, loja<br>Centro, Pedro Leopoldo – MG, 33600-000<br><a href="https://www.google.com/maps/search/?api=1&query=Comendador+Ant%C3%B4nio+Alves+1396+Pedro+Leopoldo" target="_blank" rel="noopener">Abrir no mapa</a></dd></div>
+          <div><a class="botao" href="https://wa.me/message/R2PNJ2TWSX5AE1" target="_blank" rel="noopener">Conversar no WhatsApp</a></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="gutter">
+  <div class="wrap">
+    <div>Paula Couto Atelier da Dança<br>Pedro Leopoldo, MG<br>© 2026</div>
+    <div class="links">
+      <a href="https://www.instagram.com/atelierdadancapaulacouto/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com/channel/UCxq1RgxgDDU3AmqampGxCOw" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<dialog id="ampliada" aria-label="Foto ampliada">
+  <div class="foto" id="ampliada-foto"><span id="ampliada-texto"></span></div>
+  <div class="legenda"><span id="ampliada-legenda"></span><button type="button" id="fechar">Fechar</button></div>
+</dialog>
+
+<script>
+const dlg = document.getElementById('ampliada');
+const foto = document.getElementById('ampliada-foto');
+document.querySelectorAll('.grade button').forEach(b => b.addEventListener('click', () => {
+  foto.classList.toggle('escura', b.hasAttribute('data-escura'));
+  document.getElementById('ampliada-texto').textContent = b.querySelector('span').textContent;
+  document.getElementById('ampliada-legenda').textContent = b.dataset.legenda;
+  dlg.showModal();
+}));
+document.getElementById('fechar').addEventListener('click', () => dlg.close());
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+</script>
+
+</body>
+</html>
